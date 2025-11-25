@@ -1,15 +1,118 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <title>Listar Usuarios</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lista de Usuarios Registrados</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f5f6fa;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #0066cc;
+      color: white;
+      padding: 1em 0;
+      text-align: center;
+    }
+    main {
+      max-width: 800px;
+      margin: 2em auto;
+      background: white;
+      padding: 2em;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1em;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 0.8em;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background: #007bff;
+      color: white;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+    footer {
+      text-align: center;
+      padding: 1em;
+      background: #0066cc;
+      color: white;
+      margin-top: 3em;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 0.5em 1em;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 1em;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
 </head>
 <body>
-  <h1>Listado de Usuarios</h1>
-  <p>Aquí se mostrarán todos los usuarios registrados.</p>
-  <textarea rows="10" cols="50" readonly>
-Usuario1
-Usuario2
-Usuario3
-  </textarea>
-  <h3><a href="index.html">Volver</a></h3>
+  <header>
+    <h2>Panel de Administración</h2>
+  </header>
+  <main>
+    <h1>Usuarios Registrados</h1>
+    <table id="tabla-usuarios">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+    <button onclick="agregarUsuario()">Agregar Usuario de Ejemplo</button>
+  </main>
+  <footer>
+  </footer>
+  <script>
+    const usuarios = [
+      { id: 1, nombre: "Ana Pérez", email: "ana@example.com" },
+      { id: 2, nombre: "Carlos Díaz", email: "carlos@example.com" },
+      { id: 3, nombre: "Lucía Torres", email: "lucia@example.com" }
+    ];
+    function mostrarUsuarios() {
+      const tbody = document.querySelector("#tabla-usuarios tbody");
+      tbody.innerHTML = "";
+      usuarios.forEach(u => {
+        const fila = document.createElement("tr");
+        fila.innerHTML = `<td>${u.id}</td><td>${u.nombre}</td><td>${u.email}</td>`;
+        tbody.appendChild(fila);
+      });
+    }
+    function agregarUsuario() {
+      const nuevo = {
+        id: usuarios.length + 1,
+        nombre: `Usuario ${usuarios.length + 1}`,
+        email: `usuario${usuarios.length + 1}@example.com`
+      };
+      usuarios.push(nuevo);
+      mostrarUsuarios();
+    }
+    mostrarUsuarios();
+  </script>
 </body>
 </html>
