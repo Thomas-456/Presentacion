@@ -71,8 +71,10 @@
   <header>
     <h2>Panel de Administración</h2>
   </header>
+
   <main>
     <h1>Usuarios Registrados</h1>
+
     <table id="tabla-usuarios">
       <thead>
         <tr>
@@ -84,16 +86,20 @@
       <tbody>
       </tbody>
     </table>
+
     <button onclick="agregarUsuario()">Agregar Usuario de Ejemplo</button>
   </main>
+
   <footer>
   </footer>
+
   <script>
     const usuarios = [
       { id: 1, nombre: "Ana Pérez", email: "ana@example.com" },
       { id: 2, nombre: "Carlos Díaz", email: "carlos@example.com" },
       { id: 3, nombre: "Lucía Torres", email: "lucia@example.com" }
     ];
+
     function mostrarUsuarios() {
       const tbody = document.querySelector("#tabla-usuarios tbody");
       tbody.innerHTML = "";
@@ -103,6 +109,7 @@
         tbody.appendChild(fila);
       });
     }
+
     function agregarUsuario() {
       const nuevo = {
         id: usuarios.length + 1,
@@ -112,7 +119,9 @@
       usuarios.push(nuevo);
       mostrarUsuarios();
     }
+
     mostrarUsuarios();
   </script>
+
 </body>
 </html>
