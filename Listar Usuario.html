@@ -1,127 +1,283 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lista de Usuarios Registrados</title>
-  <style>
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: #f5f6fa;
-      color: #333;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: #0066cc;
-      color: white;
-      padding: 1em 0;
-      text-align: center;
-    }
-    main {
-      max-width: 800px;
-      margin: 2em auto;
-      background: white;
-      padding: 2em;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 1em;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th, td {
-      padding: 0.8em;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
-    th {
-      background: #007bff;
-      color: white;
-    }
-    tr:hover {
-      background-color: #f1f1f1;
-    }
-    footer {
-      text-align: center;
-      padding: 1em;
-      background: #0066cc;
-      color: white;
-      margin-top: 3em;
-    }
-    button {
-      background: #007bff;
-      color: white;
-      border: none;
-      padding: 0.5em 1em;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 1em;
-    }
-    button:hover {
-      background: #0056b3;
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Usuarios</title>
+
+<style>
+:root{
+  --blue1:#0066cc;
+  --blue2:#007bff;
+  --light:#f5f6fa;
+  --card:#ffffff;
+  --muted:#6b7280;
+  --radius:12px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;font-family:Segoe UI,Arial}
+
+body{
+  background:var(--light);
+  padding:24px;
+  color:#111;
+}
+
+.container{
+  max-width:950px;
+  margin:auto;
+}
+
+header{
+  background:linear-gradient(90deg,var(--blue1),var(--blue2));
+  color:white;
+  padding:16px 20px;
+  border-radius:var(--radius);
+  box-shadow:0 6px 20px rgba(0,0,0,0.12);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:24px;
+}
+
+header a{
+  color:white;
+  text-decoration:none;
+  padding:8px 12px;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,.3);
+}
+
+main{
+  background:white;
+  padding:20px;
+  border-radius:var(--radius);
+  box-shadow:0 6px 26px rgba(0,0,0,.06);
+}
+
+.toolbar{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-bottom:14px;
+}
+
+input[type="text"]{
+  padding:8px 10px;
+  border:1px solid #ccc;
+  border-radius:8px;
+  width:230px;
+}
+
+button{
+  background:var(--blue2);
+  color:white;
+  border:0;
+  padding:8px 12px;
+  border-radius:8px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+button:hover{filter:brightness(.9)}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:12px;
+}
+
+th{
+  background:#eef4ff;
+  padding:12px;
+  text-align:left;
+  font-size:14px;
+  border-bottom:1px solid #d9e3ff;
+}
+
+td{
+  padding:12px;
+  border-bottom:1px solid #eee;
+  font-size:14px;
+}
+
+tr:hover{
+  background:#f8fbff;
+}
+
+.actions button{
+  background:#f0f0f0;
+  color:#333;
+  margin-right:6px;
+}
+
+#modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+
+.modal-box{
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  width:320px;
+  box-shadow:0 8px 30px rgba(0,0,0,.2);
+}
+
+.modal-box h3{
+  margin-bottom:10px;
+  font-size:18px;
+}
+
+.modal-box input{
+  width:100%;
+  padding:10px;
+  border:1px solid #ccc;
+  border-radius:8px;
+  margin-bottom:10px;
+}
+
+.modal-box button{
+  width:100%;
+  margin-top:6px;
+}
+</style>
 </head>
+
 <body>
-  <header>
-    <h2>Panel de Administración</h2>
-  </header>
+<div class="container">
 
-  <main>
-    <h1>Usuarios Registrados</h1>
+<header>
+  <div><strong>Usuarios Registrados</strong></div>
+  <a href="index.html">← Volver</a>
+</header>
 
-    <table id="tabla-usuarios">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Email</th>
-        </tr>
-      </thead>
-      <tbody>
-      </tbody>
-    </table>
+<main>
+  <div class="toolbar">
+    <button id="addBtn">Agregar Usuario</button>
+    <input type="text" id="search" placeholder="Buscar...">
+  </div>
 
-    <button onclick="agregarUsuario()">Agregar Usuario de Ejemplo</button>
-  </main>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</main>
 
-  <footer>
-  </footer>
+</div>
 
-  <script>
-    const usuarios = [
-      { id: 1, nombre: "Ana Pérez", email: "ana@example.com" },
-      { id: 2, nombre: "Carlos Díaz", email: "carlos@example.com" },
-      { id: 3, nombre: "Lucía Torres", email: "lucia@example.com" }
-    ];
+<div id="modal">
+  <div class="modal-box">
+    <h3 id="modalTitle">Nuevo usuario</h3>
+    <input id="name" placeholder="Nombre">
+    <input id="email" placeholder="Email">
+    <button id="save">Guardar</button>
+    <button onclick="closeModal()" style="background:#aaa">Cancelar</button>
+  </div>
+</div>
 
-    function mostrarUsuarios() {
-      const tbody = document.querySelector("#tabla-usuarios tbody");
-      tbody.innerHTML = "";
-      usuarios.forEach(u => {
-        const fila = document.createElement("tr");
-        fila.innerHTML = `<td>${u.id}</td><td>${u.nombre}</td><td>${u.email}</td>`;
-        tbody.appendChild(fila);
-      });
-    }
+<script>
+let users=[
+  {id:1,nombre:"Ana Pérez",email:"ana@example.com"},
+  {id:2,nombre:"Carlos Díaz",email:"carlos@example.com"},
+  {id:3,nombre:"Lucía Torres",email:"lucia@example.com"}
+];
 
-    function agregarUsuario() {
-      const nuevo = {
-        id: usuarios.length + 1,
-        nombre: `Usuario ${usuarios.length + 1}`,
-        email: `usuario${usuarios.length + 1}@example.com`
-      };
-      usuarios.push(nuevo);
-      mostrarUsuarios();
-    }
+let editing=null;
 
-    mostrarUsuarios();
-  </script>
+const tbody=document.getElementById("tbody");
+const modal=document.getElementById("modal");
+const nameInput=document.getElementById("name");
+const emailInput=document.getElementById("email");
+const title=document.getElementById("modalTitle");
+
+function render(){
+  tbody.innerHTML="";
+  users.forEach(u=>{
+    let tr=document.createElement("tr");
+    tr.innerHTML=`
+      <td>${u.id}</td>
+      <td>${u.nombre}</td>
+      <td>${u.email}</td>
+      <td class="actions">
+        <button onclick="edit(${u.id})">Editar</button>
+        <button onclick="removeUser(${u.id})">Borrar</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function openModal(){
+  modal.style.display="flex";
+  nameInput.focus();
+}
+function closeModal(){
+  modal.style.display="none";
+  nameInput.value="";
+  emailInput.value="";
+  editing=null;
+}
+
+document.getElementById("addBtn").onclick=()=>{
+  title.textContent="Nuevo usuario";
+  editing=null;
+  openModal();
+};
+
+document.getElementById("save").onclick=()=>{
+  let n=nameInput.value.trim();
+  let e=emailInput.value.trim();
+  if(!n||!e){alert("Completa todo");return;}
+
+  if(editing){
+    let u=users.find(x=>x.id===editing);
+    u.nombre=n;
+    u.email=e;
+  }else{
+    users.push({id:users.length+1,nombre:n,email:e});
+  }
+  render();
+  closeModal();
+};
+
+function edit(id){
+  let u=users.find(x=>x.id===id);
+  editing=id;
+  title.textContent="Editar usuario";
+  nameInput.value=u.nombre;
+  emailInput.value=u.email;
+  openModal();
+}
+
+function removeUser(id){
+  if(confirm("¿Eliminar usuario?")){
+    users=users.filter(u=>u.id!==id);
+    render();
+  }
+}
+
+document.getElementById("search").oninput=e=>{
+  let txt=e.target.value.toLowerCase();
+  [...tbody.children].forEach(row=>{
+    row.style.display=row.innerText.toLowerCase().includes(txt) ? "" : "none";
+  });
+};
+
+render();
+</script>
 
 </body>
 </html>
